@@ -30,7 +30,7 @@ const SideMenu: React.FC = () => {
         <DnsIcon /> Imagem por status code
       </LinkMenu>
       <LinkMenu
-        href="#"
+        href="/random-dog"
       >
         <PetsIcon /> Random dog
       </LinkMenu>

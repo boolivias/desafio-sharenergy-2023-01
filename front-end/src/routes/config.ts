@@ -1,6 +1,7 @@
 import HomePage from '../pages/Home'
 import ImageByStatusCodePage from '../pages/ImageByStatusCode'
 import LoginPage from '../pages/Login'
+import RandomDogPage from '../pages/RandomDog'
 
 const list = [
   {
@@ -16,6 +17,11 @@ const list = [
   {
     path: '/status-code',
     element: ImageByStatusCodePage,
+    protected: true,
+  },
+  {
+    path: '/random-dog',
+    element: RandomDogPage,
     protected: true,
   }
 ]
