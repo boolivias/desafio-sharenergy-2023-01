@@ -20,12 +20,12 @@ const SideMenu: React.FC = () => {
       }}
     >
       <LinkMenu
-        href="#"
+        href="/inicio"
       >
         <HomeIcon />Inicio
       </LinkMenu>
       <LinkMenu
-        href="#"
+        href="/status-code"
       >
         <DnsIcon /> Imagem por status code
       </LinkMenu>
