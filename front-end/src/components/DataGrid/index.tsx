@@ -1,7 +1,8 @@
-import useStyles from "./style";
-import { DataGrid as DGMaterial } from '@mui/x-data-grid';
 import { Container } from "@material-ui/core";
-import Avatar from '@material-ui/core/Avatar';
+import { DataGrid as DGMaterial } from '@mui/x-data-grid';
+import ActionsCell from "./components/ActionsCell";
+import ImageCell from "./components/ImageCell";
+import useStyles from "./style";
 
 export interface IColumnConfig {
   field: string,
@@ -12,12 +13,23 @@ export interface IColumnConfig {
 interface IDataGrid {
   columnsConfig: IColumnConfig[],
   data: { [x: string]: any }[],
+  actions?: {
+    onEdit(row: any): void,
+    onDelete(row: any): void,
+  }
 }
 
-const DataGrid: React.FC<IDataGrid> = ({ columnsConfig, data }) => {
+const DataGrid: React.FC<IDataGrid> = ({
+  columnsConfig,
+  data,
+  actions = {
+    onDelete: () => { },
+    onEdit: () => { },
+  },
+}) => {
   const classes = useStyles()
 
-  return(
+  return (
     <Container
       classes={{
         root: classes.rootContainer,
@@ -29,20 +41,18 @@ const DataGrid: React.FC<IDataGrid> = ({ columnsConfig, data }) => {
           root: classes.rootGrid,
         }}
         columns={
-          columnsConfig.map((col) => ({
+          (
+            actions
+              ? [...columnsConfig, { field: 'actions', headerName: 'Ações', type: 'actions' }]
+              : columnsConfig
+          ).map((col) => ({
             ...col,
             flex: 1,
             renderCell: col.type === 'image'
-              ? (params) => (
-                <Avatar 
-                  alt="Imagem"
-                  style={{
-                    margin: 'auto',
-                  }}
-                  src={params.value?.toString()}
-                />
-              )
-              : undefined
+              ? (params) => (<ImageCell params={params} />)
+              : col.type === 'actions'
+                ? (params) => (<ActionsCell params={params} {...actions} />)
+                : undefined
           }))
         }
         rows={data}
@@ -50,7 +60,7 @@ const DataGrid: React.FC<IDataGrid> = ({ columnsConfig, data }) => {
         disableSelectionOnClick
         pagination
         pageSize={10}
-        // rowsPerPageOptions={[5, 10, 20]}
+      // rowsPerPageOptions={[5, 10, 20]}
       />
     </Container>
   );

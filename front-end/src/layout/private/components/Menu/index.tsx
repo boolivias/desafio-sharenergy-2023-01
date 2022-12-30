@@ -35,7 +35,7 @@ const SideMenu: React.FC = () => {
         <PetsIcon /> Random dog
       </LinkMenu>
       <LinkMenu
-        href="#"
+        href="/clients"
       >
         <PeopleIcon /> Clientes
       </LinkMenu>

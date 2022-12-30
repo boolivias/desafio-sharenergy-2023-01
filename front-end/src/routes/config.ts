@@ -1,3 +1,4 @@
+import ClientsCRUDPage from '../pages/ClientsCRUD'
 import HomePage from '../pages/Home'
 import ImageByStatusCodePage from '../pages/ImageByStatusCode'
 import LoginPage from '../pages/Login'
@@ -22,6 +23,11 @@ const list = [
   {
     path: '/random-dog',
     element: RandomDogPage,
+    protected: true,
+  },
+  {
+    path: '/clients',
+    element: ClientsCRUDPage,
     protected: true,
   }
 ]

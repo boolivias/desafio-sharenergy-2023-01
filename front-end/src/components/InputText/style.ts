@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  container: {
-    background: '#F7F7FC',
-    height: '100vh',
+  root: {
+    flex: '1',
+    width: '100%',
   },
 });
 
