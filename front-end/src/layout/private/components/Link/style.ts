@@ -1,31 +1,44 @@
-const styledBy = (property: any, mapping: any) => (props: any) => mapping[props[property]]
+import { makeStyles } from "@material-ui/styles"
 
-const useStyle = {
-  root: {
-    padding: '15px 20px',
-    color: styledBy('type', {
-      default: '#000',
-      logout: '#DD0808',
-    }),
-    borderRadius: '4px',
-    transition: '.2s all linear',
-    marginTop: styledBy('type', {
-      default: '5px',
-      logout: 'auto',
-    }),
-    display: 'grid',
-    gridTemplateColumns: 'auto 1fr',
-    alignItems: 'center',
-    gridColumnGap: '10px',
-    '&:hover': {
-      backgroundColor: styledBy('type', {
-        default: '#EEAF22',
-        logout: '#DD0808',
-      }),
-      textDecoration: 'none',
-      color: '#fff'
-    },
-  }
+const BaseCSS = {
+  padding: '15px 20px',
+  borderRadius: '4px',
+  transition: '.2s all linear',
+  display: 'grid',
+  gridTemplateColumns: 'auto 1fr',
+  alignItems: 'center',
+  gridColumnGap: '10px',
+  '&:hover': {
+    textDecoration: 'none',
+    color: '#fff'
+  },
 }
 
-export default useStyle
+const useStyleDefault = makeStyles({
+  root: {
+    ...BaseCSS,
+    color: '#000',
+    marginTop: '5px',
+    '&:hover': {
+      ...(BaseCSS['&:hover']),
+      backgroundColor: '#EEAF22',
+    },
+  }
+})
+
+const useStyleLogout = makeStyles({
+  root: {
+    ...BaseCSS,
+    color: '#DD0808',
+    marginTop: 'auto',
+    '&:hover': {
+      ...(BaseCSS['&:hover']),
+      backgroundColor: '#DD0808',
+    },
+  }
+})
+
+export default {
+  default: useStyleDefault,
+  logout: useStyleLogout,
+}

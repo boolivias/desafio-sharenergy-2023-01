@@ -8,17 +8,20 @@ interface ILinkMenu {
   type?: 'default' | 'logout',
 }
 
-const LinkStyled = withStyles(style)((props) => (<Link {...props} />))
-
 const LinkMenu: React.FC<ILinkMenu> = ({ children, href, type = 'default' }) => {
+  const classes = (
+    type === 'logout'
+      ? style.logout
+      : style.default
+  )()
 
   return (
-    <LinkStyled
+    <Link
       href={href}
-      type={type}
+      classes={classes} 
     >
       {children}
-    </LinkStyled>
+    </Link>
   )
 }
 
