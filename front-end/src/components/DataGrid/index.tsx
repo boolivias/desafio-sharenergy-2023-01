@@ -13,6 +13,7 @@ export interface IColumnConfig {
 interface IDataGrid {
   columnsConfig: IColumnConfig[],
   data: { [x: string]: any }[],
+  showFooter?: boolean,
   actions?: {
     onEdit(row: any): void,
     onDelete(row: any): void,
@@ -22,10 +23,8 @@ interface IDataGrid {
 const DataGrid: React.FC<IDataGrid> = ({
   columnsConfig,
   data,
-  actions = {
-    onDelete: () => { },
-    onEdit: () => { },
-  },
+  showFooter = true,
+  actions,
 }) => {
   const classes = useStyles()
 
@@ -36,10 +35,10 @@ const DataGrid: React.FC<IDataGrid> = ({
       }}
     >
       <DGMaterial
-        // className={isAntDesign ? antDesignClasses.root : undefined}
         classes={{
           root: classes.rootGrid,
         }}
+        hideFooter={!showFooter}
         columns={
           (
             actions
@@ -50,7 +49,7 @@ const DataGrid: React.FC<IDataGrid> = ({
             flex: 1,
             renderCell: col.type === 'image'
               ? (params) => (<ImageCell params={params} />)
-              : col.type === 'actions'
+              : col.type === 'actions' && actions
                 ? (params) => (<ActionsCell params={params} {...actions} />)
                 : undefined
           }))

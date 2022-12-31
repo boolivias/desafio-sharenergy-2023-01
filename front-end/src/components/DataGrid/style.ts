@@ -87,6 +87,9 @@ const useStyles = makeStyles({
       },
     },
   },
+  footerContainerHidden: {
+    display: 'none',
+  }
 });
 
 export default useStyles;

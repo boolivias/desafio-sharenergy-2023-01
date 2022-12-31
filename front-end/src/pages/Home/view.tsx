@@ -1,7 +1,10 @@
-import { Container } from "@material-ui/core";
+import { Container, IconButton } from "@material-ui/core";
 import Button from "../../components/Button";
 import DataGrid, { IColumnConfig } from "../../components/DataGrid";
 import InputText from "../../components/InputText";
+import IUser from "../../types/user";
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 const COLUMNS_CONFIG: IColumnConfig[] = [
   {
@@ -26,20 +29,17 @@ const COLUMNS_CONFIG: IColumnConfig[] = [
     headerName: 'Idade',
   },
 ]
+interface IHomeView {
+  data: IUser[],
+  page: number,
+  onNextPage(): void,
+  onBeforePage(): void,
+}
 
-const MOCK_DATA = Array.from({length: 30}, ((_, i) => ({
-  id: i,
-  photo: 'http://localhost:3000/logo192.png',
-  name: `Usuário silva ${i}`,
-  email: `user.${i}@email.com`,
-  username: `user ${i}`,
-  age: Math.floor(Math.random() * 100),
-})));
-
-const HomeView: React.FC = () => {
+const HomeView: React.FC<IHomeView> = ({ data, onBeforePage, onNextPage, page }) => {
   return (
     <>
-      <Container
+      {/* <Container
         style={{
           display: 'flex',
           marginBottom: '1rem',
@@ -53,11 +53,29 @@ const HomeView: React.FC = () => {
         <Button
           text="Buscar"
         />
-      </Container>
+      </Container> */}
       <DataGrid
         columnsConfig={COLUMNS_CONFIG}
-        data={MOCK_DATA}
+        data={data}
+        showFooter={false}
       />
+      <Container
+        style={{
+          display: 'flex',
+          marginTop: '1rem',
+          justifyContent: 'space-around'
+        }}
+      >
+        <IconButton onClick={() => {
+          if (page > 1) onBeforePage()
+        }}>
+          <NavigateBeforeIcon />
+        </IconButton>
+        <p>Página: {page}</p>
+        <IconButton onClick={onNextPage}>
+          <NavigateNextIcon />
+        </IconButton>
+      </Container>
     </>
   )
 }
