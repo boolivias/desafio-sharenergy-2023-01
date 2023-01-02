@@ -29,7 +29,7 @@ export class HTTPCats_Provider implements IHTTPCats_Provider {
         })
         .catch((e) => {
           console.log(e)
-          reject({
+          resolve({
             success: false,
             errorMessage: e.response?.status === 404 ? 'Imagem não encontrada' : e.message,
           })

@@ -14,11 +14,13 @@ export class HTTPCatGet_UseCase {
       )
     }
 
+    console.log('=========================> CHEGOU AQUIII')
     const response = await this.httpCat_provider.getImage(code)
 
     if (response.success)
       return response.data
 
+    console.log(response)
     throw new UseCase_Error(
       response.errorMessage === 'Imagem não encontrada' ? 404 : 502,
       response.errorMessage === 'Imagem não encontrada' ? response.errorMessage : 'Ocorreu um erro inesperado. Tente novamente mais tarde.',
