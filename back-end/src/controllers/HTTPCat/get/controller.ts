@@ -21,7 +21,6 @@ export class HTTPCatGet_Controller {
         response.end(data);
       })
     } catch (err) {
-      console.log('========================> ERRO AQUI')
       if (err instanceof UseCase_Error) {
         err.print()
 

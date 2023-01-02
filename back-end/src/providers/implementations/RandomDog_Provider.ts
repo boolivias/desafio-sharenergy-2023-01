@@ -42,7 +42,7 @@ export class RandomDog_Provider implements IRandomDog_Provider {
           })
         })
         .catch((e) => {
-          reject({
+          resolve({
             success: false,
             errorMessage: e.message,
           })
