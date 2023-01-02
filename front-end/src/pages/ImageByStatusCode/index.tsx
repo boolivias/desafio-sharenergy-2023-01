@@ -1,5 +1,6 @@
 import { useState } from "react"
-import apiStatusCat from "../../services/statusCat"
+import { toastError } from "../../helpers/toastify"
+import api from "../../services/api"
 import ImageByStatusCodeView from "./view"
 
 const ImageByStatusCodePage: React.FC = () => {
@@ -7,15 +8,21 @@ const ImageByStatusCodePage: React.FC = () => {
 
   async function handleOnSubmit(statusCode: string) {
     try {
-      const resp = await apiStatusCat.get(statusCode)
-      console.log('=============> RESPOSTA STATUS CAT')
-      console.log(resp)
-    } catch (error) {
+      const resp = await api.get(`http-cat/${statusCode}`, { responseType: 'blob' })
+      let reader = new window.FileReader()
+      reader.readAsDataURL(resp.data)
+      reader.onload = function () {
+        let imageDataUrl = reader.result
+        setImageUrl(imageDataUrl as string)
+      };
+    } catch (error: any) {
       console.log(error)
+      toastError(JSON.parse(await error?.response?.data.text()).message)
+      setImageUrl(null)
     }
   }
 
-  return(
+  return (
     <ImageByStatusCodeView
       data={imageUrl}
       onSubmit={handleOnSubmit}
