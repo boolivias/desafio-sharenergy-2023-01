@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import Task from './src/controllers/HTTPCat';
+import HTTPCat from '../controllers/HTTPCat';
 
 const router = Router();
 
 router.get('/:code', (request, response) => {
-  Task.get
+  HTTPCat.get
     .handle(request, response)
     .catch((e) => {
       console.log(e)
