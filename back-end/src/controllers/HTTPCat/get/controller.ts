@@ -8,7 +8,7 @@ export class HTTPCatGet_Controller {
     private use_case: HTTPCatGet_UseCase,
   ) { }
 
-  async handle(request: Request, response: Response): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<any> {
     try {
       const { code } = request.params
 
@@ -20,7 +20,6 @@ export class HTTPCatGet_Controller {
         response.writeHead(200, { 'Content-Type': 'image/jpeg' });
         response.end(data);
       })
-      // return response.status(200).send(resp_UseCase)
     } catch (err) {
       if (err instanceof UseCase_Error) {
         err.print()
