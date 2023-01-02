@@ -4,9 +4,10 @@ import useStyles from "./style"
 interface IInputText {
   label: string,
   fullWidth?: boolean,
+  onChangeText?(text: string): void,
 }
 
-const InputText: React.FC<IInputText> = ({ label, fullWidth }) => {
+const InputText: React.FC<IInputText> = ({ label, fullWidth, onChangeText }) => {
   const classes = useStyles()
 
   return (
@@ -14,6 +15,10 @@ const InputText: React.FC<IInputText> = ({ label, fullWidth }) => {
       label={label}
       variant="outlined"
       classes={fullWidth ? { root: classes.root } : undefined}
+      onChange={(e) => {
+        if(onChangeText)
+          onChangeText(e.target.value)
+      }}
     />
   )
 }

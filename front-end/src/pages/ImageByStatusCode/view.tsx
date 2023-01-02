@@ -2,8 +2,17 @@ import { Grid } from "@material-ui/core"
 import Button from "../../components/Button"
 import InputText from "../../components/InputText"
 import Image from "./components/Image"
+import ErrorIcon from '@material-ui/icons/Error';
+import { useState } from "react";
 
-const ImageByStatusCodeView: React.FC = () => {
+interface IImageByStatusCodeView {
+  data: string | null,
+  onSubmit(statusCode: string): void,
+}
+
+const ImageByStatusCodeView: React.FC<IImageByStatusCodeView> = ({ onSubmit, data }) => {
+  const [statusCode, setStatusCode] = useState('')
+
   return(
     <Grid
       container
@@ -15,19 +24,29 @@ const ImageByStatusCodeView: React.FC = () => {
         direction="column"
         style={{
           display:'flex',
-          width: '300px',
           marginBottom: '1rem',
         }}
       >
         <InputText
           label="Status code"
+          onChangeText={setStatusCode}
         />
         <Button
           text="Pesquisar"
+          onClick={() => { onSubmit(statusCode) }}
         />
       </Grid>
       <Grid item>
-        <Image src="http://localhost:3000/logo192.png" />
+        {
+          data
+            ? (<Image src={data} />)
+            : (
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem'}}>
+                <ErrorIcon />
+                <p>Não foi encontrada uma imagem para o status digitado</p>
+              </div>
+            )
+        }
       </Grid>
     </Grid>
   )
