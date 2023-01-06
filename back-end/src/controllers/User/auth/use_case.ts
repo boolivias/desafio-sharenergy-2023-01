@@ -24,6 +24,6 @@ export class UserAuth_UseCase {
     })
     const refreshToken = await this.refreshToken_repository.create(user.id)
 
-    return { token, refreshToken }
+    return { token, refreshToken: refreshToken.id }
   }
 }
