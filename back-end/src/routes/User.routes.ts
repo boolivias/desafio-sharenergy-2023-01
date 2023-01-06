@@ -13,7 +13,7 @@ router.post('/auth', (request, response) => {
 });
 
 router.post('/refresh-token', (request, response) => {
-  User.auth
+  User.refreshToken
     .handle(request, response)
     .catch((e) => {
       console.log(e)
