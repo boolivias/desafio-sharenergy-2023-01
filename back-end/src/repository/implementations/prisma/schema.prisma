@@ -26,3 +26,18 @@ model RefreshToken {
 
   @@map("refresh_tokens")
 }
+
+model Customer {
+  id         String  @id @default(uuid()) @map("_id")
+  cpf        String  @unique
+  name       String
+  email      String  @unique
+  phone      String
+  street     String
+  number     String
+  city       String
+  state      String
+  complement String?
+
+  @@map("customers")
+}
