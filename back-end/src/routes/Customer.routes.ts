@@ -31,6 +31,15 @@ router.delete('/:id', (req, res, next) => middleware.admin.handle(req, res, next
     });
 });
 
+router.get('/:id', (req, res, next) => middleware.admin.handle(req, res, next), (request, response) => {
+  Customer.getById
+    .handle(request, response)
+    .catch((e) => {
+      console.log(e)
+      return response.status(500).send({ message: 'Erro inesperado. Tente novamente mais tarde' })
+    });
+});
+
 const customer_router = {
   path: '/customer',
   router,
