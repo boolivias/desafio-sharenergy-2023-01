@@ -19,6 +19,12 @@ export class RefreshToken_Repository implements IRefreshToken_Repository {
     return refresh_token
   }
 
+  async delete(id: string): Promise<boolean> {
+    const refreshDeleted = await this.prisma.refreshToken.delete({ where: { id } })
+
+    return !!refreshDeleted
+  }
+
   async getById(id: string, renovateId = false,): Promise<RefreshToken | null> {
     const refresh_token = await (
       renovateId
