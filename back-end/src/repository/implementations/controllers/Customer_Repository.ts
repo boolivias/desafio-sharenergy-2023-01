@@ -31,4 +31,27 @@ export class Customer_Repository implements ICustomer_Repository {
 
     return this.toEntity(customer)
   }
+
+  async update(id: string, data: Partial<Customer>): Promise<boolean> {
+    const { address, ...others } = data
+
+    const customer = await this.prisma.customer.update({
+      data: {
+        ...others,
+        ...address,
+      },
+      where: { id },
+    })
+
+    return !!customer
+  }
+
+  async getById(id: string): Promise<Customer | null> {
+    const customer = await this.prisma.customer.findFirst({ where: { id } })
+
+    if (!customer)
+      return null
+
+    return this.toEntity(customer)
+  }
 }

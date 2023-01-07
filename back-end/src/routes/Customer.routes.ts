@@ -13,6 +13,15 @@ router.post('/', (req, res, next) => middleware.admin.handle(req, res, next), (r
     });
 });
 
+router.patch('/:id', (req, res, next) => middleware.admin.handle(req, res, next), (request, response) => {
+  Customer.update
+    .handle(request, response)
+    .catch((e) => {
+      console.log(e)
+      return response.status(500).send({ message: 'Erro inesperado. Tente novamente mais tarde' })
+    });
+});
+
 const customer_router = {
   path: '/customer',
   router,
