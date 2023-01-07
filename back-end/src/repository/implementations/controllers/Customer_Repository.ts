@@ -46,6 +46,12 @@ export class Customer_Repository implements ICustomer_Repository {
     return !!customer
   }
 
+  async delete(id: string): Promise<boolean> {
+    const customerDeleted = await this.prisma.customer.delete({ where: { id } })
+
+    return !!customerDeleted
+  }
+
   async getById(id: string): Promise<Customer | null> {
     const customer = await this.prisma.customer.findFirst({ where: { id } })
 
