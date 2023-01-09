@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom";
+import AuthContextProvider from "../contexts/auth/AuthProvider";
 import PrivateLayout from "../layout/private";
 import list from "./config";
 
@@ -21,7 +22,9 @@ const router = createBrowserRouter(
 
 function Router() {
   return (
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   );
 }
 

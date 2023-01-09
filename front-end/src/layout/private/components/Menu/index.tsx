@@ -4,11 +4,13 @@ import HomeIcon from '@material-ui/icons/Home'
 import PeopleIcon from '@material-ui/icons/People'
 import PetsIcon from '@material-ui/icons/Pets'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
+import useAuthContext from '../../../../contexts/auth'
 import LinkMenu from "../Link"
 import useStyle from './style'
 
 const SideMenu: React.FC = () => {
   const classes = useStyle()
+  const { signOut } = useAuthContext()
 
   return (
     <Grid
@@ -40,7 +42,7 @@ const SideMenu: React.FC = () => {
         <PeopleIcon /> Clientes
       </LinkMenu>
 
-      <LinkMenu type='logout'>
+      <LinkMenu type='logout' onClick={signOut}>
         <PowerSettingsNewIcon /> Sair
       </LinkMenu>
     </Grid>

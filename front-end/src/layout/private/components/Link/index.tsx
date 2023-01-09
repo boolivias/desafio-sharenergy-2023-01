@@ -6,9 +6,10 @@ interface ILinkMenu {
   children: React.ReactNode,
   href?: string,
   type?: 'default' | 'logout',
+  onClick?(): void,
 }
 
-const LinkMenu: React.FC<ILinkMenu> = ({ children, href, type = 'default' }) => {
+const LinkMenu: React.FC<ILinkMenu> = ({ children, href, type = 'default', onClick }) => {
   const classes = (
     type === 'logout'
       ? style.logout
@@ -18,7 +19,10 @@ const LinkMenu: React.FC<ILinkMenu> = ({ children, href, type = 'default' }) => 
   return (
     <Link
       href={href}
-      classes={classes} 
+      classes={classes}
+      onClick={() => {
+        if(onClick) onClick()
+      }}
     >
       {children}
     </Link>
