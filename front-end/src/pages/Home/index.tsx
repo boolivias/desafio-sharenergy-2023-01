@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import apiRandomUsers from "../../services/randomUsers"
-import IUser from "../../types/user"
 import HomeView from "./view"
 
 interface IRequestInfo {
@@ -9,7 +8,7 @@ interface IRequestInfo {
 }
 
 const HomePage: React.FC = () => {
-  const [users, setUsers] = useState<IUser[]>([])
+  const [users, setUsers] = useState<any[]>([])
   const [requestInfo, setRequestInfo] = useState<IRequestInfo>({ cur_page: 1, seed: null })
 
   useEffect(() => { loadPage() }, [])
@@ -21,7 +20,7 @@ const HomePage: React.FC = () => {
     try {
       const resp = await apiRandomUsers.get(`/?inc=${fields}&results=${results}&page=${page}${requestInfo.seed && `&seed=${requestInfo.seed}`}`)
       setUsers(
-        resp.data.results.map((u: any): IUser => ({
+        resp.data.results.map((u: any) => ({
           id: u.login.uuid,
           username: u.login.username,
           photo: u.picture.medium,
@@ -39,12 +38,12 @@ const HomePage: React.FC = () => {
     }
   }
 
-  return(
+  return (
     <HomeView
       data={users}
       page={requestInfo.cur_page}
-      onNextPage={() => loadPage(requestInfo.cur_page+1)}
-      onBeforePage={() => loadPage(requestInfo.cur_page-1)}
+      onNextPage={() => loadPage(requestInfo.cur_page + 1)}
+      onBeforePage={() => loadPage(requestInfo.cur_page - 1)}
     />
   )
 }

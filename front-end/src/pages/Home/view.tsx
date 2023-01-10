@@ -1,10 +1,7 @@
 import { Container, IconButton } from "@material-ui/core";
-import Button from "../../components/Button";
-import DataGrid, { IColumnConfig } from "../../components/DataGrid";
-import InputText from "../../components/InputText";
-import IUser from "../../types/user";
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import DataGrid, { IColumnConfig } from "../../components/DataGrid";
 
 const COLUMNS_CONFIG: IColumnConfig[] = [
   {
@@ -30,7 +27,7 @@ const COLUMNS_CONFIG: IColumnConfig[] = [
   },
 ]
 interface IHomeView {
-  data: IUser[],
+  data: any[],
   page: number,
   onNextPage(): void,
   onBeforePage(): void,
