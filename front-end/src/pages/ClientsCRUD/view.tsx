@@ -30,10 +30,11 @@ const COLUMNS_CONFIG: IColumnConfig[] = [
 ]
 
 interface IClientsCRUDView {
-  data: ICustomer[]
+  data: ICustomer[],
+  onCreate(data: Omit<ICustomer, 'id'>): Promise<boolean>,
 }
 
-const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data }) => {
+const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data, onCreate }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
   function handleCloseModal() {
@@ -42,6 +43,12 @@ const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data }) => {
 
   function handleOpenModal(_row = null) {
     setModalIsOpen(true)
+  }
+
+  async function handleOnSubmit(data: Omit<ICustomer, 'id'>) {
+    const success = await onCreate(data)
+
+    if (success) handleCloseModal()
   }
 
   return (
@@ -76,7 +83,7 @@ const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data }) => {
         onClose={handleCloseModal}
       >
         <Forms
-          onSubmit={handleCloseModal}
+          onSubmit={handleOnSubmit}
           onCancel={handleCloseModal}
         />
       </Modal>

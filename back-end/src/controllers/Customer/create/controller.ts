@@ -36,7 +36,7 @@ export class CustomerCreate_Controller {
       }
 
       const data = await this.use_case.execute({ customer })
-      return res.status(200).send(data)
+      return res.status(200).send({ ...data, address: undefined, ...data.address })
     } catch (err) {
       if (err instanceof UseCase_Error) {
         err.print()
