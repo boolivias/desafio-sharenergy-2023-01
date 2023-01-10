@@ -32,21 +32,31 @@ const COLUMNS_CONFIG: IColumnConfig[] = [
 interface IClientsCRUDView {
   data: ICustomer[],
   onCreate(data: Omit<ICustomer, 'id'>): Promise<boolean>,
+  onEdit(data: ICustomer): Promise<boolean>,
+  onDelete(id: ICustomer['id']): void,
 }
 
-const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data, onCreate }) => {
+const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data, onCreate, onEdit, onDelete }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [editData, setEditData] = useState<ICustomer | null>(null)
 
   function handleCloseModal() {
     setModalIsOpen(false)
   }
 
-  function handleOpenModal(_row = null) {
+  function handleOpenModal(row = null) {
+    if(row) {
+      const index = data.findIndex((c) => c.id === (row as ICustomer).id)
+      setEditData(data[index])
+    } else {
+      setEditData(null)
+    }
+
     setModalIsOpen(true)
   }
 
-  async function handleOnSubmit(data: Omit<ICustomer, 'id'>) {
-    const success = await onCreate(data)
+  async function handleOnSubmit(data: Omit<ICustomer, 'id'> & { id: ICustomer['id'] }) {
+    const success = editData ? await onEdit(data) : await onCreate(data)
 
     if (success) handleCloseModal()
   }
@@ -74,7 +84,7 @@ const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data, onCreate }) => {
           }))
         }
         actions={{
-          onDelete: (row) => console.log(row),
+          onDelete: (row) => onDelete(row.id),
           onEdit: handleOpenModal,
         }}
       />
@@ -83,6 +93,7 @@ const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data, onCreate }) => {
         onClose={handleCloseModal}
       >
         <Forms
+          data={editData}
           onSubmit={handleOnSubmit}
           onCancel={handleCloseModal}
         />

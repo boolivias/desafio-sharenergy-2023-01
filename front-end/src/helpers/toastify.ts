@@ -5,3 +5,9 @@ export const toastError = (msg: string) => {
     type: 'error',
   })
 }
+
+export const toastSuccess = (msg: string) => {
+  toast(msg, {
+    type: 'success',
+  })
+}
