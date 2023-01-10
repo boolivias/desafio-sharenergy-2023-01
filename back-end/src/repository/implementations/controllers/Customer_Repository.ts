@@ -60,4 +60,9 @@ export class Customer_Repository implements ICustomer_Repository {
 
     return this.toEntity(customer)
   }
+
+  async getAll(): Promise<Customer[]> {
+    const customers = await this.prisma.customer.findMany()
+    return customers.map(this.toEntity)
+  }
 }
