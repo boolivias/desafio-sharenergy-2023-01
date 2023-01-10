@@ -103,11 +103,14 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   async function signOut() {
     try {
-      await api.post('user/logout', {
-        refresh_token: data.refreshToken
+      await api.delete('user/logout', {
+        data: {
+          refresh_token: data.refreshToken
+        }
       })
 
       clearLoginData()
+      window.location.reload()
     } catch (error: any) {
       console.log(error)
 
