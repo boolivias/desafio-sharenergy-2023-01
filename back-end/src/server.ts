@@ -13,7 +13,7 @@ const options: cors.CorsOptions = {
     'X-Access-Token',
     'Authorization',
   ],
-  methods: 'GET,PUT,POST,DELETE',
+  methods: 'GET,PUT,POST,DELETE,PATCH',
   origin: '*',
 };
 
