@@ -4,6 +4,15 @@ import middleware from '../middleware';
 
 const router = Router();
 
+router.get('/', (req, res, next) => middleware.admin.handle(req, res, next), (request, response) => {
+  Customer.getAll
+    .handle(request, response)
+    .catch((e) => {
+      console.log(e)
+      return response.status(500).send({ message: 'Erro inesperado. Tente novamente mais tarde' })
+    });
+});
+
 router.post('/', (req, res, next) => middleware.admin.handle(req, res, next), (request, response) => {
   Customer.create
     .handle(request, response)

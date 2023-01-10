@@ -3,14 +3,10 @@ import { useState } from "react";
 import Button from "../../components/Button";
 import DataGrid, { IColumnConfig } from "../../components/DataGrid";
 import Modal from "../../components/Modal";
+import { ICustomer } from "../../entities/ICustomer";
 import Forms from "./components/Forms";
 
 const COLUMNS_CONFIG: IColumnConfig[] = [
-  {
-    field: 'photo',
-    headerName: 'Foto',
-    type: "image",
-  },
   {
     field: 'name',
     headerName: 'Nome completo',
@@ -20,25 +16,24 @@ const COLUMNS_CONFIG: IColumnConfig[] = [
     headerName: 'Email',
   },
   {
-    field: 'username',
-    headerName: 'Username',
+    field: 'cpf',
+    headerName: 'CPF',
   },
   {
-    field: 'age',
-    headerName: 'Idade',
+    field: 'phone',
+    headerName: 'Telefone',
+  },
+  {
+    field: 'address',
+    headerName: 'Endereço',
   },
 ]
 
-const MOCK_DATA = Array.from({ length: 30 }, ((_, i) => ({
-  id: i,
-  photo: 'http://localhost:3000/logo192.png',
-  name: `Usuário silva ${i}`,
-  email: `user.${i}@email.com`,
-  username: `user ${i}`,
-  age: Math.floor(Math.random() * 100),
-})));
+interface IClientsCRUDView {
+  data: ICustomer[]
+}
 
-const ClientsCRUDView: React.FC = () => {
+const ClientsCRUDView: React.FC<IClientsCRUDView> = ({ data }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
   function handleCloseModal() {
@@ -65,7 +60,12 @@ const ClientsCRUDView: React.FC = () => {
       </Container>
       <DataGrid
         columnsConfig={COLUMNS_CONFIG}
-        data={MOCK_DATA}
+        data={
+          data.map(({ id, name, email, cpf, phone, street, number, city, state }) => ({
+            id, name, cpf, phone, email,
+            address: `${street}, ${number}, ${city} - ${state}`
+          }))
+        }
         actions={{
           onDelete: (row) => console.log(row),
           onEdit: handleOpenModal,
